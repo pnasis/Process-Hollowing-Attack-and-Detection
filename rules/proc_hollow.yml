@@ -1,12 +1,14 @@
 title: Process Hollowing via Windows API Calls
 id: 123e4567-e89b-12d3-a456-426614174000
 status: experimental
-description: Detects process hollowing into Notepad via VirtualAllocEx, WriteProcessMemory, and CreateRemoteThread
+description: Detects process hollowing
 author: Prodromos - Anargyros Nasis
 date: 2025-03-10
 references:
   - https://attack.mitre.org/techniques/T1055/
-  - https://attack.mitre.org/techniques/T1055/001/
+  - https://attack.mitre.org/techniques/T1055/012/
+  - https://attack.mitre.org/techniques/T1106/
+  - https://attack.mitre.org/techniques/T1204/002
 
 logsource:
   category: process_creation
@@ -32,6 +34,8 @@ falsepositives:
 level: high
 tags:
   - attack.t1055
-  - attack.t1055.001
+  - attack.t1055.012
+  - attack.t1106
+  - attack.t1204.002
   - process_injection
   - windows
