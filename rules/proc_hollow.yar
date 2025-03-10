@@ -7,10 +7,10 @@ rule process_hollowing {
         severity = "high"
         mitre_attack = "T1055"
     strings:
-        $proc = "CreateProcessA" nocase
-        $alloc = "VirtualAllocEx" nocase
-        $write = "WriteProcessMemory" nocase
-        $thread = "CreateRemoteThread" nocase
+        $api1 = "CreateProcessA" nocase
+        $api2 = "VirtualAllocEx" nocase
+        $api3 = "WriteProcessMemory" nocase
+        $api4 = "CreateRemoteThread" nocase
     condition:
-        (uint16(0) == 0x5A4D) and 4 of them
+        (uint16(0) == 0x5A4D) and all of them
 }
