@@ -36,17 +36,12 @@ By modifying the **entry point** in the process's **PEB (Process Environment Blo
 ├── README.md                   # Project documentation
 ```
 
-### **📝 Source Code: Process Hollowing (C)**
-The following files are included:
-- `process_hollowing.c` → The core implementation of process hollowing.
-- `README.md` → This documentation.
-
 ### **🔍 Detection Rules**
 This repository provides **YARA and Sigma rules** to detect process hollowing behavior.
 
 | **Detection Method** | **File** |
 |----------------------|----------------|
-| **YARA Rules** | `proc_hollow.yara` |
+| **YARA Rules** | `proc_hollow.yar` |
 | **Sigma Rules** | `proc_hollow.yml` |
 
 ---
