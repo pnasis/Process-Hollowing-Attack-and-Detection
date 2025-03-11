@@ -131,27 +131,27 @@ tags:
 
 ## How to Use
 
-### **1️ Compile the Code**
+### **1. Compile the Code**
 ```bash
 gcc poc/process_hollowing.c -o process_hollowing.exe
 ```
 
-### **2️ Run the Process Hollowing Program**
+### **2. Run the Process Hollowing Program**
 ```bash
 process_hollowing.exe
 ```
 
-### **3️ Use YARA to Detect the Technique**
+### **3. Use YARA to Detect the Technique**
 ```bash
 yara -r rules/proc_hollow.yar ../poc/
 ```
 
-### **4 Use Sigma to Detect the Technique**
+### **4. Use Sigma to Detect the Technique**
 ```bash
 sigmac -t windows rules/proc_hollow.yml | elastalert-test-rule --debug
 ```
 
-### **5 Monitor with Sigma (Using a SIEM or Splunk)**
+### **5. Monitor with Sigma (Using a SIEM or Splunk)**
 Upload `proc_hollow.yml` to your SIEM tool to detect suspicious behavior.
 
 ---
