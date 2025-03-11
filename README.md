@@ -143,7 +143,7 @@ process_hollowing.exe
 
 ### **3. Use YARA to Detect the Technique**
 ```bash
-yara -r rules/proc_hollow.yar ../poc/
+yara -r rules/proc_hollow.yar .
 ```
 
 ### **4. Use Sigma to Detect the Technique**
