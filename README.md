@@ -146,7 +146,7 @@ process_hollowing.exe
 yara -r rules/proc_hollow.yar ../poc/
 ```
 
-### **4 Use Sigma to Detect the Technique
+### **4 Use Sigma to Detect the Technique**
 ```bash
 sigmac -t windows rules/proc_hollow.yml | elastalert-test-rule --debug
 ```
