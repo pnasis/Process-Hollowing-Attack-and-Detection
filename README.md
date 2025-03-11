@@ -161,6 +161,12 @@ Upload `proc_hollow.yml` to your SIEM tool to detect suspicious behavior.
 
 ---
 
+## License
+
+This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
+
+---
+
 ## References
 - [MITRE ATT&CK - Process Injection](https://attack.mitre.org/techniques/T1055/)
 - [Windows API Reference](https://learn.microsoft.com/en-us/windows/win32/api/)
