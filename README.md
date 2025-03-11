@@ -13,28 +13,32 @@ The process hollowing technique consists of **several key steps**:
 ### **1️⃣ Create a Suspended Process**
 The attacker creates a new process (e.g., `notepad.exe`) in a **suspended state** using `CreateProcessA()` or `CreateProcessW()`.
 
-### **2️⃣ Unmap the Process Memory**
-The attack code uses `NtUnmapViewOfSection()` to remove the legitimate executable code from memory while keeping the process structure intact.
-
-### **3️⃣ Allocate New Memory for Malicious Code**
+### **2️⃣ Allocate New Memory for Malicious Code**
 Using `VirtualAllocEx()`, the attacker allocates memory in the suspended process and writes malicious shellcode into it.
 
-### **4️⃣ Write Malicious Code to Target Process**
+### **3️⃣ Write Malicious Code to Target Process**
 The attacker writes the malicious payload into the allocated memory using `WriteProcessMemory()`.
 
-### **5️⃣ Set Entry Point and Resume Execution**
+### **4️⃣ Set Entry Point and Resume Execution**
 By modifying the **entry point** in the process's **PEB (Process Environment Block)**, the malware ensures execution starts from its injected code. The process is then resumed using `ResumeThread()`.
 
 ---
 
-## 🚀 Repository Contents
-
-This repository contains a **C implementation of the process hollowing technique**, along with **detection mechanisms** using **YARA** and **Sigma rules**.
+## 📂 Repository Structure
+```
+.
+├── poc/                        # Proof of Concept (PoC) code
+│   └── process_hollowing.c     # C implementation of process hollowing
+├── rules/                      # Detection rules
+│   ├── process_hollowing.yar   # YARA rule for detecting process hollowing
+│   ├── process_hollowing.yml   # Sigma rule for detecting process hollowing
+├── LICENSE                     # License for the project
+├── README.md                   # Project documentation
+```
 
 ### **📝 Source Code: Process Hollowing (C)**
 The following files are included:
 - `process_hollowing.c` → The core implementation of process hollowing.
-- `Makefile` → A simple Makefile to compile the project.
 - `README.md` → This documentation.
 
 ### **🔍 Detection Rules**
@@ -60,9 +64,10 @@ rule process_hollowing {
         mitre_attack = "T1055, T1055.012, T1106, T1204.002"
     strings:
         $api1 = "CreateProcessA" nocase
-        $api2 = "VirtualAllocEx" nocase
-        $api3 = "WriteProcessMemory" nocase
-        $api4 = "CreateRemoteThread" nocase
+        $api2 = "NtQueryInformationProcess" nocase
+        $api3 = "VirtualAllocEx" nocase
+        $api4 = "WriteProcessMemory" nocase
+        $api5 = "CreateRemoteThread" nocase
     condition:
         (uint16(0) == 0x5A4D) and all of them
 }
@@ -70,7 +75,7 @@ rule process_hollowing {
 
 ---
 
-## Sigma Rule for Process Hollowing Detection (Sysmon)
+## Sigma Rule for Detecting Process Hollowing
 
 ```yaml
 title: Process Hollowing via Windows API Calls
@@ -95,10 +100,10 @@ detection:
       - "C:\\Windows\\System32\\notepad.exe"
     CommandLine|contains:
       - "CreateProcessA"
+      - "NtQueryInformationProcess"
       - "VirtualAllocEx"
       - "WriteProcessMemory"
       - "CreateRemoteThread"
-      - "NtQueryInformationProcess"
 
   condition: selection
 
@@ -118,7 +123,7 @@ tags:
 
 ---
 
-## MITRE ATT&CK Mapping
+## 🛡️ MITRE ATT&CK Mapping
 
 | Technique | Name |
 |-----------|-------------------------------|
@@ -133,7 +138,7 @@ tags:
 
 ### **1️ Compile the Code**
 ```bash
-gcc process_hollowing.c -o process_hollowing.exe
+gcc poc/process_hollowing.c -o process_hollowing.exe
 ```
 
 ### **2️ Run the Process Hollowing Program**
@@ -143,10 +148,15 @@ process_hollowing.exe
 
 ### **3️ Use YARA to Detect the Technique**
 ```bash
-yara -r proc_hollow.yara ../poc/
+yara -r rules/proc_hollow.yar ../poc/
 ```
 
-### **4️ Monitor with Sigma (Using a SIEM or Splunk)**
+### **4 Use Sigma to Detect the Technique
+```bash
+sigmac -t windows rules/proc_hollow.yml | elastalert-test-rule --debug
+```
+
+### **5 Monitor with Sigma (Using a SIEM or Splunk)**
 Upload `proc_hollow.yml` to your SIEM tool to detect suspicious behavior.
 
 ---
@@ -163,4 +173,3 @@ Upload `proc_hollow.yml` to your SIEM tool to detect suspicious behavior.
 ---
 
 ⭐ **If you find this useful, feel free to star the repository!**
-

@@ -20,10 +20,10 @@ detection:
       - "C:\\Windows\\System32\\notepad.exe"
     CommandLine|contains:
       - "CreateProcessA"
+      - "NtQueryInformationProcess"
       - "VirtualAllocEx"
       - "WriteProcessMemory"
       - "CreateRemoteThread"
-      - "NtQueryInformationProcess"
 
   condition: selection
 
