@@ -30,8 +30,8 @@ By modifying the **entry point** in the process's **PEB (Process Environment Blo
 ├── poc/                        # Proof of Concept (PoC) code
 │   └── process_hollowing.c     # C implementation of process hollowing
 ├── rules/                      # Detection rules
-│   ├── process_hollowing.yar   # YARA rule for detecting process hollowing
-│   ├── process_hollowing.yml   # Sigma rule for detecting process hollowing
+│   ├── proc_hollow.yar         # YARA rule for detecting process hollowing
+│   ├── proc_hollow.yml         # Sigma rule for detecting process hollowing
 ├── LICENSE                     # License for the project
 ├── README.md                   # Project documentation
 ```
